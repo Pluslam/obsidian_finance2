@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obsidian 打造第二大腦｜一週從零開始完整課程（優化版・含多公司財務實戰）</title>
+<style>
+  :root {
+    --bg: #f7f5f2;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --accent: #1e3a5f;
+    --accent-light: #2c5282;
+    --border: #e8e4de;
+    --success: #276749;
+    --error: #c53030;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 20px 80px; }
+  header {
+    background: linear-gradient(180deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+    padding: 48px 20px 40px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  header p { opacity: 0.9; font-size: 1.05rem; max-width: 620px; margin: 0 auto; }
+  .progress-wrap {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .progress-bar {
+    height: 8px;
+    background: #e8e4de;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e3a5f, #2c5282);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .nav-days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .nav-days button {
+    flex: 1;
+    min-width: 110px;
+    padding: 12px 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+  .nav-days button:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-days button.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .nav-days button.done { background: #edf2f7; color: var(--success); }
+  .lesson {
+    display: none;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .lesson.active { display: block; }
+  .lesson h2 {
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .lesson .day-tag {
+    display: inline-block;
+    background: #edf2f7;
+    color: var(--accent);
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .section { margin-bottom: 28px; }
+  .section h3 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e8e4de;
+  }
+  .section p, .section li { color: var(--text-secondary); margin-bottom: 8px; }
+  .section ul, .section ol { padding-left: 22px; margin-bottom: 12px; }
+  .section li { margin-bottom: 6px; }
+  .highlight-box {
+    background: #f0f4f8;
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  .error-box {
+    background: #fff5f5;
+    border-left: 4px solid var(--error);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+  .practice-box {
+    background: #f0fff4;
+    border: 1px solid #c6f6d5;
+    padding: 18px;
+    border-radius: 8px;
+    margin: 16px 0;
+  }
+  .finance-box {
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    padding: 16px 18px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+  }
+  .quiz-box {
+    background: #fafafa;
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+  .quiz-option {
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quiz-option:hover { border-color: var(--accent-light); }
+  .quiz-option.selected { border-color: var(--accent); background: #ebf4ff; }
+  .quiz-option.correct { border-color: var(--success); background: #f0fff4; }
+  .quiz-option.wrong { border-color: var(--error); background: #fff5f5; }
+  .btn {
+    display: inline-block;
+    padding: 10px 22px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-top: 12px;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--accent-light); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #f0fff4; color: var(--success); }
+  .feedback.ng { background: #fff5f5; color: var(--error); }
+  .photo-card {
+    background: #f8f6f3;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .photo-card::before {
+    content: "📷";
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+  .project-steps {
+    counter-reset: step;
+  }
+  .project-steps li {
+    list-style: none;
+    position: relative;
+    padding-left: 36px;
+    margin-bottom: 14px;
+  }
+  .project-steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.9rem;
+  }
+  table th, table td {
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: left;
+  }
+  table th { background: #f0f4f8; color: var(--accent); }
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.35rem; }
+    .lesson { padding: 22px 18px; }
+    .nav-days button { min-width: 46%; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Obsidian 打造第二大腦</h1>
+  <p>一週從零開始 · PARA + CODE · 專為一人公司多業務設計<br>（優化版：加入 Properties、Bases 與多公司財務對帳實戰）</p>
+</header>
+
+<div class="container">
+  <div class="progress-wrap">
+    <div style="display:flex;justify-content:space-between;font-size:0.9rem;color:var(--text-secondary)">
+      <span>課程進度</span>
+      <span id="progressText">0 / 7</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="nav-days" id="navDays">
+    <button data-day="1" class="active">Day 1<br>認識與安裝</button>
+    <button data-day="2">Day 2<br>Markdown</button>
+    <button data-day="3">Day 3<br>連結與圖</button>
+    <button data-day="4">Day 4<br>CODE 上</button>
+    <button data-day="5">Day 5<br>CODE 下</button>
+    <button data-day="6">Day 6<br>多業務 PARA</button>
+    <button data-day="7">Day 7<br>完整專案</button>
+  </div>
+
+  <!-- ========== DAY 1 ========== -->
+  <div class="lesson active" id="day1">
+    <span class="day-tag">Day 1 · 約 45–60 分鐘</span>
+    <h2>認識第二大腦與安裝 Obsidian</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>明白「第二大腦」是什麼，以及為什麼一人公司特別需要它</li>
+        <li>理解 Tiago Forte 的 CODE 與 PARA 核心概念</li>
+        <li>成功下載、安裝 Obsidian 並建立第一個 Vault</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p>你的大腦擅長「想」同「連結」，但唔擅長「記住大量細節」。第二大腦就係一個外部系統，幫你把有價值的知識、想法、資料全部收納，等你需要時可以快速找回並重新組合。</p>
+      <p>Tiago Forte 提出兩個核心框架：</p>
+      <div class="highlight-box">
+        <strong>CODE</strong>（流程）：Capture（捕捉）→ Organize（整理）→ Distill（提煉）→ Express（表達）<br>
+        <strong>PARA</strong>（結構）：Projects（專案）· Areas（領域）· Resources（資源）· Archives（封存）
+      </div>
+      <p>對於一人公司來說，第二大腦可以同時管理多個業務的客戶資料、財務筆記、活動計劃、學習心得，全部用同一套系統。之後我們會特別用「多公司財務對帳」作為真實場景示範。</p>
+      <div class="photo-card">真實場景：電腦螢幕開住 Obsidian，旁邊放住一本手寫筆記同咖啡杯，自然光從側邊照入，淺景深突出筆記內容</div>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>去 <strong>obsidian.md</strong> 下載對應你系統嘅版本（Windows / macOS / Linux）</li>
+        <li>安裝後打開，選擇「Create new vault」</li>
+        <li>Vault 名稱建議用：<code>第二大腦</code> 或 <code>MySecondBrain</code></li>
+        <li>選擇一個你容易搵到嘅資料夾位置</li>
+        <li>點 Create，你就會見到一個空白嘅工作區</li>
+        <li>按 <code>Ctrl+N</code>（Mac 用 <code>Cmd+N</code>）建立第一個筆記，寫上「歡迎來到我的第二大腦」</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>一開始就裝大量 Community Plugins → 容易混亂，先用核心功能</li>
+          <li>Vault 放喺雲端同步資料夾直接同步 → 可能造成衝突</li>
+          <li>Vault 名稱用英文空格或特殊符號 → 保持簡單</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        今天完成：<br>
+        1. 成功安裝 Obsidian<br>
+        2. 建立名為「第二大腦」的 Vault<br>
+        3. 寫下第一個筆記，內容包含你目前最想整理的 3 個業務或生活領域
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="1">
+        <p><strong>問題：</strong>根據 Tiago Forte，第二大腦最核心的價值是什麼？</p>
+        <label class="quiz-option" data-value="0">A. 取代人腦的思考能力</label>
+        <label class="quiz-option" data-value="1">B. 把有價值的知識外部化，方便日後提取與重組</label>
+        <label class="quiz-option" data-value="2">C. 純粹用來備份所有檔案</label>
+        <label class="quiz-option" data-value="3">D. 自動幫你寫完所有報告</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>第二大腦 = 外部知識系統，幫助「提取記憶」而非只「儲存」</li>
+        <li>CODE 是流程，PARA 是結構</li>
+        <li>今天只做一件事：把 Obsidian 裝好並寫下第一個筆記</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(1)">完成本日並前往 Day 2 →</button>
+  </div>
+
+  <!-- ========== DAY 2 ========== -->
+  <div class="lesson" id="day2">
+    <span class="day-tag">Day 2 · 約 50–70 分鐘</span>
+    <h2>Markdown 基礎：寫出乾淨可讀的筆記</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>掌握最常用的 Markdown 語法</li>
+        <li>能寫出標題、列表、粗體、連結、引用</li>
+        <li>理解「純文字 + Markdown」為什麼適合長期知識管理</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p>Obsidian 用 Markdown 作為筆記格式。好處係：你寫嘅內容永遠係純文字，十年後仍然可以用任何編輯器打開，唔會被軟體鎖定。</p>
+      <div class="highlight-box">
+        <code># 標題1</code>　<code>## 標題2</code>　<code>**粗體**</code>　<code>*斜體*</code><br>
+        <code>- 列表</code>　<code>1. 有序</code>　<code>[[筆記連結]]</code>　<code>> 引用</code>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>建立新筆記，命名為「Markdown 練習」</li>
+        <li>練習寫出：一個大標題、兩個小標題、一段粗體重點、一個無序列表、一個有序列表</li>
+        <li>用 <code>[[ ]]</code> 嘗試連結到你昨天寫嘅筆記</li>
+        <li>儲存後，喺預覽模式睇吓效果</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>標題後面冇空格（#標題 → 應該 # 標題）</li>
+          <li>過度用標題，導致結構混亂</li>
+          <li>把所有內容都塞進一個超長筆記 → 之後會難找</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        寫一個「今日學習記錄」筆記，包含：日期、今日學到的 3 件事（用列表）、一個自己的感悟（用粗體標出關鍵句）、並用 [[ ]] 連結到昨天的筆記。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="2">
+        <p><strong>問題：</strong>在 Obsidian 中建立內部筆記連結的正確寫法是？</p>
+        <label class="quiz-option" data-value="0">A. [筆記名稱](連結)</label>
+        <label class="quiz-option" data-value="1">B. (筆記名稱)</label>
+        <label class="quiz-option" data-value="2">C. [[筆記名稱]]</label>
+        <label class="quiz-option" data-value="3">D. {{筆記名稱}}</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>Markdown 是第二大腦的「通用語言」</li>
+        <li>先掌握標題、列表、粗體、[[連結]] 就足夠開始</li>
+        <li>筆記要短而清晰，方便日後「提取」</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(2)">完成本日並前往 Day 3 →</button>
+  </div>
+
+  <!-- ========== DAY 3 ========== -->
+  <div class="lesson" id="day3">
+    <span class="day-tag">Day 3 · 約 50–70 分鐘</span>
+    <h2>雙向連結與 Graph View：讓知識開始「長」起來</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>熟練使用 [[雙向連結]] 與 Backlinks</li>
+        <li>理解 Graph View 如何顯示知識網絡</li>
+        <li>建立至少 5 個互相連結的筆記</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p>傳統資料夾係「分類」，但第二大腦強調「連結」。當你用 [[ ]] 把兩個概念連起來，Obsidian 會自動記住「邊個提過邊個」，形成雙向關係。</p>
+      <p>Graph View 可以即時睇到你的知識網絡。一開始可能只有幾個點，但隨著你持續寫同連結，圖會變得越來越有價值——這正是「提取記憶」的關鍵。</p>
+      <div class="photo-card">真實場景：電腦螢幕顯示 Obsidian Graph View，點與線交織成網絡，旁邊有手寫筆記紙張，自然光，淺景深</div>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>建立筆記「PARA 方法」並簡單寫下四個字母意思</li>
+        <li>建立筆記「CODE 方法」並寫下四個步驟</li>
+        <li>在兩個筆記中互相用 [[PARA 方法]] 與 [[CODE 方法]] 連結</li>
+        <li>再開兩個與你業務相關的筆記（例如「客戶跟進」或「活動策劃」），並連結回 PARA</li>
+        <li>打開 Graph View，觀察連線</li>
+        <li>在右側面板打開 Backlinks，看看有哪些筆記引用了當前筆記</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>為連結而連結，沒有真正關聯</li>
+          <li>一開始就追求「完美圖譜」→ 圖譜係結果，唔係目標</li>
+          <li>忽略 Backlinks 面板</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        建立一個「知識種子」筆記，寫下你最近學到的一個重要概念，然後強制用 [[ ]] 連結到至少 3 個已有或新建的筆記。完成後打開 Graph View 截圖保存。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="1">
+        <p><strong>問題：</strong>在 Obsidian 中，Backlinks（反向連結）的主要作用是？</p>
+        <label class="quiz-option" data-value="0">A. 自動刪除沒用的筆記</label>
+        <label class="quiz-option" data-value="1">B. 顯示有哪些其他筆記引用了當前筆記</label>
+        <label class="quiz-option" data-value="2">C. 把筆記轉成 PDF</label>
+        <label class="quiz-option" data-value="3">D. 同步到雲端</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>連結 > 分類，這是第二大腦與傳統資料夾最大的不同</li>
+        <li>Graph View 是視覺化你思維網絡的工具</li>
+        <li>持續寫 + 持續連，知識會自然「長」出來</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(3)">完成本日並前往 Day 4 →</button>
+  </div>
+
+  <!-- ========== DAY 4 ========== -->
+  <div class="lesson" id="day4">
+    <span class="day-tag">Day 4 · 約 60–80 分鐘</span>
+    <h2>CODE 上半部：Capture 與 Organize（PARA）+ Properties 入門</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>理解「只捕捉會產生共鳴的東西」</li>
+        <li>學會用 PARA 四個資料夾快速整理筆記</li>
+        <li>初步認識 Properties（屬性），為之後財務與儀表板打基礎</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p><strong>Capture（捕捉）</strong>：只存「會令你產生共鳴、覺得有用」的內容。</p>
+      <p><strong>Organize（整理）</strong>：用「可行動性」而非「主題」來分類。PARA 就係為此而生：</p>
+      <div class="highlight-box">
+        <strong>Projects</strong>：有明確目標同期限的短期工作<br>
+        <strong>Areas</strong>：需要長期維護的責任領域（財務、健康、客戶關係）<br>
+        <strong>Resources</strong>：感興趣的主題資料<br>
+        <strong>Archives</strong>：已完成或暫不需要的項目
+      </div>
+      <p>另外，Obsidian 的 <strong>Properties</strong>（筆記屬性）可以幫你為每篇筆記加上「標籤式資訊」（例如公司、狀態、金額），之後用 Bases 做成可篩選儀表板，對多公司財務特別有用。</p>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>在 Vault 根目錄建立四個資料夾：01-Projects、02-Areas、03-Resources、04-Archives</li>
+        <li>在 01-Projects 下建立 2–3 個你目前真實進行中的專案資料夾</li>
+        <li>在 02-Areas 下建立「財務」「健康」「學習」「客戶關係」等</li>
+        <li>把已有筆記根據「它現在最能幫助哪個專案或領域」移到對應位置</li>
+        <li>建立一個「Inbox」筆記或資料夾，專門放剛捕捉、尚未整理的內容</li>
+        <li>（進階嘗試）在一篇筆記按 <code>Ctrl+;</code> 或點右上角加 Properties，試試加入 <code>company</code> 或 <code>status</code></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>用主題（例如「行銷」「技術」）取代 PARA → 會令行動性下降</li>
+          <li>Projects 資料夾永遠不清理 → 定期把完成的移到 Archives</li>
+          <li>捕捉太多無用資訊 → 記住「共鳴」原則</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        列出你目前真實存在的 3 個 Projects 與 4 個 Areas，並在 Obsidian 中建立對應資料夾與至少一個代表筆記。把一個舊筆記移到正確的 PARA 位置。嘗試為一篇筆記加上 1–2 個 Properties。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="0">
+        <p><strong>問題：</strong>根據 PARA，「正在準備 9 月的比賽活動」應該放在哪一類？</p>
+        <label class="quiz-option" data-value="0">A. Projects</label>
+        <label class="quiz-option" data-value="1">B. Areas</label>
+        <label class="quiz-option" data-value="2">C. Resources</label>
+        <label class="quiz-option" data-value="3">D. Archives</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>Capture 只收「有共鳴」的東西</li>
+        <li>Organize 用可行動性（PARA）而非主題</li>
+        <li>Properties 是之後做儀表板與財務追蹤的基礎</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(4)">完成本日並前往 Day 5 →</button>
+  </div>
+
+  <!-- ========== DAY 5 ========== -->
+  <div class="lesson" id="day5">
+    <span class="day-tag">Day 5 · 約 50–70 分鐘</span>
+    <h2>CODE 下半部：Distill 與 Express</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>學會把長筆記提煉成「未來自己能一眼看懂」的精華</li>
+        <li>理解 Express 才是第二大腦的最終目的</li>
+        <li>完成一次從捕捉到輸出的完整小循環</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p><strong>Distill（提煉）</strong>：原始筆記通常太長。提煉的目標係「找到本質」，讓未來的你在 10 秒內就能抓到重點。常用方法：粗體關鍵句、寫一句話總結。</p>
+      <p><strong>Express（表達）</strong>：第二大腦不是終點，而是燃料。最終要輸出——寫文章、做簡報、回覆客戶、做決策、出財務總覽。</p>
+      <div class="highlight-box">
+        一人公司場景：你捕捉了一篇關於「幼稚園銷售異議處理」的文章 → 整理到對應 Project → 提煉出 5 個關鍵話術 → 直接用在下次見校長的腳本裡。這就是完整的 CODE。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>找一個你之前寫的較長筆記</li>
+        <li>在頂部加一行：<code>> 一句話總結：……</code></li>
+        <li>把最重要的 2–3 句用 <code>**粗體**</code> 標出</li>
+        <li>思考：這個筆記可以幫助我產出什麼？並寫在筆記最下方</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>只收集不提煉 → 未來自己仍然看不懂</li>
+          <li>提煉過度，失去原始脈絡</li>
+          <li>永遠不 Express → 系統會變成「知識墳場」</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        選擇一個已有筆記，完成 Distill（一句話總結 + 粗體關鍵句）。然後用這個筆記實際產出一個小東西：可以是 WhatsApp 訊息草稿、三點簡報大綱、或給自己的行動清單。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="3">
+        <p><strong>問題：</strong>CODE 中哪個步驟是第二大腦真正創造價值的關鍵？</p>
+        <label class="quiz-option" data-value="0">A. Capture</label>
+        <label class="quiz-option" data-value="1">B. Organize</label>
+        <label class="quiz-option" data-value="2">C. Distill</label>
+        <label class="quiz-option" data-value="3">D. Express</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>Distill 讓未來的自己能快速提取</li>
+        <li>Express 才是系統存在的理由</li>
+        <li>每次小循環都會強化你的第二大腦</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(5)">完成本日並前往 Day 6 →</button>
+  </div>
+
+  <!-- ========== DAY 6 ========== -->
+  <div class="lesson" id="day6">
+    <span class="day-tag">Day 6 · 約 70–90 分鐘</span>
+    <h2>為一人公司 / 多業務設計 PARA + 多公司財務基礎</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>根據真實業務設計專屬的 PARA 結構</li>
+        <li>認識 Properties + Bases 如何支援多公司財務對帳</li>
+        <li>建立「Inbox → 處理 → 歸檔」的日常流程</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 白話解釋</h3>
+      <p>一人公司通常同時跑多個業務。PARA 的優勢係「跨業務統一」：Projects 可以同時有不同公司的專案；Areas 放長期責任（尤其是「財務」）。</p>
+      <div class="finance-box">
+        <strong>多公司財務對帳核心思路</strong><br>
+        用 Properties 為每筆交易加上 <code>company</code>、<code>type</code>、<code>amount</code>、<code>status</code>、<code>date</code> 等屬性。<br>
+        之後用 Bases（官方核心功能）做成可篩選、可排序的儀表板，一眼睇到各公司待對帳項目、現金流、待收款。
+      </div>
+      <p>建議在 02-Areas/財務 下建立：00-Inbox、01-交易紀錄、02-發票與收據、03-銀行對帳、04-公司總覽、05-每月對帳。</p>
+    </div>
+
+    <div class="section">
+      <h3>🛠️ 操作步驟</h3>
+      <ol>
+        <li>檢視你現有的 Projects，確保每個都有「明確目標 + 大概期限」</li>
+        <li>在 02-Areas 建立「財務」資料夾，並加入上述子資料夾</li>
+        <li>為常用 Area 建立「儀表板筆記」</li>
+        <li>建立一個「每週檢視」筆記模板</li>
+        <li>嘗試為 1–2 筆模擬交易筆記加上 Properties（company、type、amount、status）</li>
+        <li>設定固定時間（例如週日晚上）做 Inbox 清零與 Projects 狀態更新</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ 常見錯誤</h3>
+      <div class="error-box">
+        <ul>
+          <li>Projects 定義太模糊（「做行銷」不是專案）</li>
+          <li>Areas 與 Projects 混淆 → 問自己「有沒有明確結束日？」</li>
+          <li>Properties 命名不統一（有時 Company、有時 company）→ Bases 會失效</li>
+          <li>不做定期檢視 → 系統會逐漸失效</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>✍️ 練習</h3>
+      <div class="practice-box">
+        完成你個人的 PARA 結構圖。在「財務」Area 建立基本資料夾。寫下你的「每週檢視」固定時間，並建立對應模板筆記。嘗試為兩筆交易加上標準 Properties。
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📝 測驗（單選）</h3>
+      <div class="quiz-box" data-correct="1">
+        <p><strong>問題：</strong>一人公司使用 PARA 處理多公司財務時，最關鍵的基礎是什麼？</p>
+        <label class="quiz-option" data-value="0">A. 每天新增 50 個筆記</label>
+        <label class="quiz-option" data-value="1">B. 統一使用 Properties（company、status、amount 等）並定期更新</label>
+        <label class="quiz-option" data-value="2">C. 把所有筆記都放在 Resources</label>
+        <label class="quiz-option" data-value="3">D. 從不使用 Archives</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 重點回顧</h3>
+      <ul>
+        <li>PARA 可以同時服務多個業務</li>
+        <li>Properties + Bases 是多公司財務對帳的核心工具</li>
+        <li>清晰的 Projects 定義 + 固定檢視習慣 = 系統長期有效</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="markDone(6)">完成本日並前往 Day 7 →</button>
+  </div>
+
+  <!-- ========== DAY 7 ========== -->
+  <div class="lesson" id="day7">
+    <span class="day-tag">Day 7 · 約 90–120 分鐘</span>
+    <h2>完整實戰專案：一人公司第二大腦 + 多公司財務啟動</h2>
+
+    <div class="section">
+      <h3>🎯 學習目標</h3>
+      <ul>
+        <li>從頭到尾完成一個真實可用的第二大腦專案</li>
+        <li>建立多公司財務對帳的基本結構與 Properties 標準</li>
+        <li>建立可長期執行的複習與維護節奏</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>🚀 完整實戰專案</h3>
+      <p>請在 Obsidian 中實際完成以下步驟：</p>
+      <ol class="project-steps">
+        <li>確認 Vault 名稱與四個 PARA 資料夾已建立</li>
+        <li>在 01-Projects 建立至少 3 個真實進行中的專案資料夾，每個裡面有一個「專案說明」筆記</li>
+        <li>在 02-Areas 建立「財務」「健康」「學習」「人脈/客戶」等領域</li>
+        <li>在「財務」下建立：00-Inbox、01-交易紀錄、02-發票與收據、03-銀行對帳、04-公司總覽、05-每月對帳</li>
+        <li>建立至少 3 筆模擬或真實交易筆記，統一使用以下 Properties：company、type、amount、date、status、category</li>
+        <li>為每間公司建立一個「公司總覽」筆記，作為日後嵌入 Bases 視圖的地方</li>
+        <li>建立 Inbox 處理流程與「每週檢視」模板</li>
+        <li>選擇一個現有長筆記，完成 Distill</li>
+        <li>用其中一個筆記實際 Express 一次（訊息草稿或行動清單）</li>
+        <li>打開 Graph View，欣賞你這一週建立的知識網絡</li>
+      </ol>
+
+      <div class="finance-box">
+        <strong>建議的 Properties 標準（可直接複製）</strong>
+        <table>
+          <tr><th>屬性</th><th>說明</th></tr>
+          <tr><td>company</td><td>Succeed / HADO / Talent / 私人 / 共用</td></tr>
+          <tr><td>type</td><td>收入 / 支出 / 轉帳 / 報銷 / 墊支</td></tr>
+          <tr><td>amount</td><td>金額（數字）</td></tr>
+          <tr><td>date</td><td>交易日期</td></tr>
+          <tr><td>status</td><td>待對帳 / 已對帳 / 待收款 / 已收款</td></tr>
+          <tr><td>category</td><td>銷售收入、廣告費、器材、交通…</td></tr>
+        </table>
+      </div>
+      <div class="photo-card">完成後的真實感覺：電腦螢幕顯示整齊的 PARA 資料夾與財務相關筆記，手寫筆記本放在旁邊記錄今日完成項目，自然光，高細節</div>
+    </div>
+
+    <div class="section">
+      <h3>📅 持續複習計劃</h3>
+      <div class="highlight-box">
+        <strong>每日（5–10 分鐘）</strong>：捕捉有共鳴的內容到 Inbox，必要時快速加上 Properties<br>
+        <strong>每週（20–30 分鐘）</strong>：清空 Inbox、更新 Projects 狀態、處理待對帳交易、把完成的移到 Archives<br>
+        <strong>每月（40–60 分鐘）</strong>：做完整對帳筆記、更新各公司總覽、檢視 Resources 是否需要提煉
+      </div>
+      <p>記住：學習的關鍵在於「如何提取記憶」。第二大腦的價值不在於你存了多少，而在於你需要時能多快、多準地找回並用出來。</p>
+    </div>
+
+    <div class="section">
+      <h3>📝 最終測驗（單選）</h3>
+      <div class="quiz-box" data-correct="2">
+        <p><strong>問題：</strong>完成這週課程後，你最應該優先養成的習慣是？</p>
+        <label class="quiz-option" data-value="0">A. 每天安裝新 Plugin</label>
+        <label class="quiz-option" data-value="1">B. 把所有舊筆記一次過全部搬進來</label>
+        <label class="quiz-option" data-value="2">C. 固定時間做 Inbox 清零、更新 Projects 狀態，並處理財務待對帳項目</label>
+        <label class="quiz-option" data-value="3">D. 追求 Graph View 越複雜越好</label>
+        <button class="btn" onclick="checkQuiz(this)">提交答案</button>
+        <div class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>📌 課程總結</h3>
+      <ul>
+        <li>你已經從零建立了 Obsidian 第二大腦的基礎</li>
+        <li>掌握了 CODE 流程與 PARA 結構</li>
+        <li>針對一人公司 / 多業務場景設計了實用結構</li>
+        <li>加入了 Properties 與多公司財務對帳的實戰基礎</li>
+        <li>完成了一次完整的捕捉 → 整理 → 提煉 → 表達循環</li>
+        <li>接下來最重要的是「持續小循環」，而不是一次完美</li>
+      </ul>
+      <p style="margin-top:16px;font-weight:600;color:var(--accent);">恭喜你完成這週的學習。現在，去打開你的 Vault，開始真正使用它吧。之後可以再深入學習 Bases 做成真正的財務儀表板。</p>
+    </div>
+    <button class="btn" onclick="markDone(7)">完成全部課程 🎉</button>
+  </div>
+</div>
+
+<footer>
+  本課程結合 Tiago Forte《Building a Second Brain》核心方法、Obsidian 官方文件與實戰優化<br>
+  專為零基礎、一人公司與多業務場景設計 · 已加入 Properties 與多公司財務對帳實戰內容<br>
+  建議一週慢慢完成，之後持續小循環使用
+</footer>
+
+<script>
+  let completed = JSON.parse(localStorage.getItem('obsidianCourseDoneV2') || '[]');
+  updateProgress();
+
+  function updateProgress() {
+    const total = 7;
+    const done = completed.length;
+    document.getElementById('progressText').textContent = `${done} / ${total}`;
+    document.getElementById('progressFill').style.width = `${(done / total) * 100}%`;
+    document.querySelectorAll('.nav-days button').forEach(btn => {
+      const d = parseInt(btn.dataset.day);
+      btn.classList.remove('done');
+      if (completed.includes(d)) btn.classList.add('done');
+    });
+  }
+
+  function markDone(day) {
+    if (!completed.includes(day)) {
+      completed.push(day);
+      localStorage.setItem('obsidianCourseDoneV2', JSON.stringify(completed));
+      updateProgress();
+    }
+    if (day < 7) {
+      showDay(day + 1);
+    } else {
+      alert('恭喜完成全部課程！記得按照複習計劃持續使用你的第二大腦，特別是多公司財務對帳部分。');
+    }
+  }
+
+  function showDay(day) {
+    document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+    document.getElementById('day' + day).classList.add('active');
+    document.querySelectorAll('.nav-days button').forEach(b => {
+      b.classList.remove('active');
+      if (parseInt(b.dataset.day) === day) b.classList.add('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.nav-days button').forEach(btn => {
+    btn.addEventListener('click', () => showDay(parseInt(btn.dataset.day)));
+  });
+
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      const box = this.closest('.quiz-box');
+      box.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  function checkQuiz(btn) {
+    const box = btn.closest('.quiz-box');
+    const selected = box.querySelector('.quiz-option.selected');
+    const feedback = box.querySelector('.feedback');
+    if (!selected) {
+      feedback.textContent = '請先選擇一個答案';
+      feedback.className = 'feedback show ng';
+      return;
+    }
+    const correct = box.dataset.correct;
+    const value = selected.dataset.value;
+    box.querySelectorAll('.quiz-option').forEach(o => {
+      o.classList.remove('correct', 'wrong');
+      if (o.dataset.value === correct) o.classList.add('correct');
+      else if (o === selected) o.classList.add('wrong');
+    });
+    if (value === correct) {
+      feedback.textContent = '✓ 正確！繼續保持。';
+      feedback.className = 'feedback show ok';
+    } else {
+      feedback.textContent = '✗ 再想一想，正確答案已標示為綠色。';
+      feedback.className = 'feedback show ng';
+    }
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
